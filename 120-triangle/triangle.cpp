@@ -2,28 +2,19 @@ class Solution {
 public:
     int minimumTotal(vector<vector<int>>& triangle) {
         int n = triangle.size();
-        vector<vector<int>> dp(n);
 
-        //Proper Triangle formation
-        for(int i=0; i<n; i++){
-            dp[i].resize(i+1); //It will create a dp of i+1 elements for index i    
-        }
-
-        //Base Case Foramtion for last row
-        for(int i=0; i<n; i++){
-            dp[n-1][i] = triangle[n-1][i];
-        }
-
-        //Fill from bottom to top
-        //last row is base case so we already created dp so started from n-1
+        //Take last row as initial dp
+        vector<int> front = triangle[n-1];
+        
+        //Build from bottom to top
         for(int i=n-2; i>=0; i--){
             for(int j=0; j<=i; j++){
-                int down = triangle[i][j] + dp[i+1][j];
-                int diagonal = triangle[i][j] + dp[i+1][j+1];
-                
-                dp[i][j] = min(down, diagonal);
+                int down = triangle[i][j] + front[j]; //Fornt gives down element(i+1, j) and i+1 is front
+                int diagonal = triangle[i][j] + front[j+1]; //This front gives element(i+1, j+1) and i+1 is front
+
+                front[j] = min(down, diagonal); //We did not update front after loop because we want till i its updated
             }
         }
-        return dp[0][0];
+        return front[0];
     }
 };
