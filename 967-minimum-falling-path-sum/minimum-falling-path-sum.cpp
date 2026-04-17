@@ -3,14 +3,14 @@ public:
     int minFallingPathSum(vector<vector<int>>& matrix) {
         int m = matrix.size();
         int n = matrix[0].size();
-        vector<int> prev(n);
+        vector<int> prev(n, 0);
 
         for(int j=0; j<n; j++){
             prev[j] = matrix[0][j]; //First row as base case
         }
 
         for(int i=1; i<m; i++){
-            vector<int> curr(n);
+            vector<int> curr(n, 0);
 
             for(int j=0; j<n; j++){
                 int up = matrix[i][j] + prev[j];
